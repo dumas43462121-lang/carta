@@ -1,7 +1,79 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carta</title>
-<style>body{margin:0;background:#f1f0eb;font-family:Georgia,serif;color:#3e3228;text-align:center}
-main{max-width:520px;margin:0 auto;padding:60px 24px}a{display:block;margin:18px 0;padding:18px;border:1px solid #c9b99a;color:#3e3228;text-decoration:none;font-size:20px;letter-spacing:2px}</style>
-</head><body><main><p style="letter-spacing:4px;font-size:13px">UNA MIRADA SOBRE LIMA</p>
-<a href="nikkei/">BARRA NIKKEI</a><a href="fondos/">ENTRADAS Y FONDOS</a><a href="vinos/">VINOS Y ESPUMANTES</a><a href="cocteles/">CÓCTELES CLÁSICOS</a></main></body></html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amat · Carta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f1f0eb;--ink:#3e3228;--gold:#9a7a3e;--line:#d9cfbd}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink)}
+  header{text-align:center;padding:22px 16px 10px}
+  header .tag{font:500 10px/1 Inter,system-ui,sans-serif;letter-spacing:.42em;color:#6b5a48}
+  header h1{margin:8px 0 0;font:500 42px/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.28em;padding-left:.28em}
+  nav{position:sticky;top:0;z-index:5;background:rgba(241,240,235,.96);backdrop-filter:blur(6px);
+      border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav .tabs{display:flex;max-width:620px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
+  nav .tabs::-webkit-scrollbar{display:none}
+  nav a{flex:1 0 auto;text-align:center;padding:14px 12px 12px;white-space:nowrap;text-decoration:none;
+        font:500 11px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#7d6c5a;
+        border-bottom:2px solid transparent}
+  nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)}
+  main{max-width:620px;margin:0 auto;padding:12px 0 28px}
+  section{display:none}
+  section.on{display:block}
+  img{display:block;width:100%;height:auto;margin:0 auto 10px}
+  footer{text-align:center;padding:6px 0 26px;font:500 10px/1 Inter,system-ui,sans-serif;letter-spacing:.42em;color:#8a7966}
+</style>
+</head>
+<body>
+<header>
+  <div class="tag">UNA MIRADA SOBRE LIMA</div>
+  <h1>AMAT</h1>
+</header>
+<nav><div class="tabs" role="tablist">
+  <a href="#nikkei" data-t="nikkei">Barra Nikkei</a>
+  <a href="#fondos" data-t="fondos">Entradas y Fondos</a>
+  <a href="#vinos" data-t="vinos">Vinos</a>
+  <a href="#cocteles" data-t="cocteles">Cócteles</a>
+</div></nav>
+<main>
+  <section id="s-nikkei">
+    <img src="nikkei/pagina1.jpg" alt="Barra Nikkei: sashimis, nigiris, tiraditos y makis">
+    <img src="nikkei/pagina2.jpg" alt="Barra Nikkei: makis, postres y panes" loading="lazy">
+  </section>
+  <section id="s-fondos">
+    <img src="fondos/pagina1.jpg" alt="Entradas y fondos" loading="lazy">
+    <img src="fondos/pagina2.jpg" alt="Piqueos" loading="lazy">
+  </section>
+  <section id="s-vinos">
+    <img src="vinos/pagina1.png" alt="Espumantes, vinos blancos, rosados y tintos" loading="lazy">
+    <img src="vinos/pagina2.png" alt="Vinos tintos y alta gama" loading="lazy">
+  </section>
+  <section id="s-cocteles">
+    <img src="cocteles/pagina1.png" alt="Cócteles clásicos" loading="lazy">
+    <img src="cocteles/pagina2.png" alt="Cócteles de autor y mocktails" loading="lazy">
+  </section>
+</main>
+<footer>AMAT · LIMA</footer>
+<script>
+  var ids=["nikkei","fondos","vinos","cocteles"];
+  function show(){
+    var h=(location.hash||"").slice(1); if(ids.indexOf(h)<0) h="nikkei";
+    ids.forEach(function(i){
+      document.getElementById("s-"+i).classList.toggle("on",i===h);
+      var a=document.querySelector('nav a[data-t="'+i+'"]');
+      if(i===h){a.setAttribute("aria-current","page");a.scrollIntoView({inline:"center",block:"nearest"});}
+      else a.removeAttribute("aria-current");
+    });
+  }
+  document.querySelectorAll("nav a").forEach(function(a){
+    a.addEventListener("click",function(e){e.preventDefault();history.replaceState(null,"","#"+a.dataset.t);show();window.scrollTo({top:0});});
+  });
+  window.addEventListener("hashchange",show); show();
+</script>
+</body>
+</html>
