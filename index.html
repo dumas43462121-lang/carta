@@ -24,6 +24,11 @@
   nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)}
   main{max-width:620px;margin:0 auto;padding:12px 0 28px}
   section{display:none}
+  #s-inicio{padding:34px 22px 10px;text-align:center}
+  #s-inicio p{font:500 11px/1.6 Inter,system-ui,sans-serif;letter-spacing:.3em;color:#7d6c5a;margin:0 0 22px}
+  #s-inicio a{display:block;margin:0 auto 14px;max-width:420px;padding:20px 12px;border:1px solid var(--line);background:#f7f5f0;
+     text-decoration:none;color:var(--ink);font:500 22px/1 "Cormorant Garamond",Georgia,serif;letter-spacing:.18em;text-transform:uppercase}
+  #s-inicio a:active{background:#ece6da}
   section.on{display:block}
   img{display:block;width:100%;height:auto;margin:0 auto 10px}
   footer{text-align:center;padding:6px 0 26px;font:500 10px/1 Inter,system-ui,sans-serif;letter-spacing:.42em;color:#8a7966}
@@ -32,7 +37,7 @@
 <body>
 <header>
   <div class="tag">UNA MIRADA SOBRE LIMA</div>
-  <h1>AMAT</h1>
+  <h1><a href="#inicio" data-t="inicio" style="color:inherit;text-decoration:none">AMAT</a></h1>
 </header>
 <nav><div class="tabs" role="tablist">
   <a href="#nikkei" data-t="nikkei">Barra Nikkei</a>
@@ -41,6 +46,13 @@
   <a href="#cocteles" data-t="cocteles">Cócteles</a>
 </div></nav>
 <main>
+  <section id="s-inicio">
+    <p>ELIGE UNA CARTA</p>
+    <a href="#nikkei" data-t="nikkei">Barra Nikkei</a>
+    <a href="#fondos" data-t="fondos">Entradas y Fondos</a>
+    <a href="#vinos" data-t="vinos">Vinos y Espumantes</a>
+    <a href="#cocteles" data-t="cocteles">Cócteles</a>
+  </section>
   <section id="s-nikkei">
     <img src="nikkei/pagina1.jpg" alt="Barra Nikkei: sashimis, nigiris, tiraditos y makis">
     <img src="nikkei/pagina2.jpg" alt="Barra Nikkei: makis, postres y panes">
@@ -60,17 +72,17 @@
 </main>
 <footer>AMAT · LIMA</footer>
 <script>
-  var ids=["nikkei","fondos","vinos","cocteles"];
+  var ids=["inicio","nikkei","fondos","vinos","cocteles"];
   function show(){
-    var h=(location.hash||"").slice(1); if(ids.indexOf(h)<0) h="nikkei";
+    var h=(location.hash||"").slice(1); if(ids.indexOf(h)<0) h="inicio";
     ids.forEach(function(i){
       document.getElementById("s-"+i).classList.toggle("on",i===h);
-      var a=document.querySelector('nav a[data-t="'+i+'"]');
+      var a=document.querySelector('nav a[data-t="'+i+'"]'); if(!a) return;
       if(i===h){a.setAttribute("aria-current","page");a.scrollIntoView({inline:"center",block:"nearest"});}
       else a.removeAttribute("aria-current");
     });
   }
-  document.querySelectorAll("nav a").forEach(function(a){
+  document.querySelectorAll("nav a, #s-inicio a, h1 a").forEach(function(a){
     a.addEventListener("click",function(e){e.preventDefault();history.replaceState(null,"","#"+a.dataset.t);show();window.scrollTo({top:0});});
   });
   window.addEventListener("hashchange",show); show();
